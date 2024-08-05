@@ -68,6 +68,9 @@ class ActiveVisitorController extends Controller
             ->editColumn('visitor_id', function ($visitingDetail) {
                 return $visitingDetail->reg_no;
             })
+            ->editColumn('id_card', function ($visitingDetail) {
+                return $visitingDetail->visitor->id_card;
+            })
             ->editColumn('email', function ($visitingDetail) {
                 return Str::limit(optional($visitingDetail->visitor)->email, 50);
             })

@@ -18,17 +18,17 @@ class VisitorService
 
     public function all()
     {
-        if(auth()->user()->getrole->name == 'Karyawan') {
-            return VisitingDetails::where(['employee_id'=>auth()->user()->employee->id])->orderBy('id', 'desc')->get();
-        }else {
+        if (auth()->user()->getrole->name == 'Karyawan') {
+            return VisitingDetails::where(['employee_id' => auth()->user()->employee->id])->orderBy('id', 'desc')->get();
+        } else {
             return VisitingDetails::orderBy('id', 'desc')->get();
         }
     }
     public function notCheckout()
     {
-        if(auth()->user()->getrole->name == 'Karyawan') {
-            return VisitingDetails::where(['employee_id'=>auth()->user()->employee->id])->whereNull('checkout_at')->orderBy('id', 'desc')->get();
-        }else {
+        if (auth()->user()->getrole->name == 'Karyawan') {
+            return VisitingDetails::where(['employee_id' => auth()->user()->employee->id])->whereNull('checkout_at')->orderBy('id', 'desc')->get();
+        } else {
             return VisitingDetails::orderBy('id', 'desc')->whereNull('checkout_at')->get();
         }
     }
@@ -39,19 +39,19 @@ class VisitorService
      */
     public function find($id)
     {
-        if(auth()->user()->getrole->name == 'Karyawan') {
-            return VisitingDetails::where(['id'=>$id,'employee_id'=>auth()->user()->employee->id])->first();
-        }else {
+        if (auth()->user()->getrole->name == 'Karyawan') {
+            return VisitingDetails::where(['id' => $id, 'employee_id' => auth()->user()->employee->id])->first();
+        } else {
             return VisitingDetails::find($id);
         }
     }
 
     public function report($startDate, $endDate)
     {
-        if(auth()->user()->getrole->name == 'Karyawan') {
-            return VisitingDetails::where(['employee_id'=>auth()->user()->employee->id])->whereBetween(DB::raw('DATE(checkin_at)'), [$startDate, $endDate])->with('visitor','employee')->orderBy('id', 'desc')->get();
-        }else {
-            return VisitingDetails::whereBetween(DB::raw('DATE(checkin_at)'), [$startDate, $endDate])->with('visitor','employee')->orderBy('id', 'desc')->get();
+        if (auth()->user()->getrole->name == 'Karyawan') {
+            return VisitingDetails::where(['employee_id' => auth()->user()->employee->id])->whereBetween(DB::raw('DATE(checkin_at)'), [$startDate, $endDate])->with('visitor', 'employee')->orderBy('id', 'desc')->get();
+        } else {
+            return VisitingDetails::whereBetween(DB::raw('DATE(checkin_at)'), [$startDate, $endDate])->with('visitor', 'employee')->orderBy('id', 'desc')->get();
         }
     }
     /**
@@ -90,32 +90,45 @@ class VisitorService
      */
     public function make(VisitorRequest $request)
     {
+        $hasPendingCheckout = VisitingDetails::whereHas('visitor', function ($query) use ($request) {
+            $query->where('id_card',  $request->input('id_card'));
+        })
+            ->whereNull('checkout_at')
+            ->exists();
+        if ($hasPendingCheckout) {
+            return redirect()->back()->with(['warning' => 'Kartu Telah Dipakai Dan Belum Check Out.']);
+        }
         $visitorID = DB::table('visiting_details')->max('id');
         $visitorReg = VisitingDetails::find($visitorID);
         $date = date('y-m-d');
         $data = substr($date, 0, 2);
         $data1 = substr($date, 3, 2);
-        $data2 = substr($date, 6,8);
-        $today=$data2 . $data1 . $data;
+        $data2 = substr($date, 6, 8);
+        $today = $data2 . $data1 . $data;
 
         if (!blank($visitorReg)) {
-            $lastentrydmy = substr($visitorReg->reg_no,0,6);
-            if($lastentrydmy==$today){
-                $value=substr($visitorReg->reg_no,6);
-                $value+=1;
+            $lastentrydmy = substr($visitorReg->reg_no, 0, 6);
+            if ($lastentrydmy == $today) {
+                $value = substr($visitorReg->reg_no, 6);
+                $value += 1;
                 $reg_no = $data2 . $data1 . $data . $value;
-            }
-            else{
+            } else {
                 $reg_no = $data2 . $data1 . $data . '1';
             }
-
         } else {
             $reg_no = $data2 . $data1 . $data . '1';
         }
 
+        $input['id_card'] = $request->input('id_card');
         $input['first_name'] = $request->input('first_name');
         $input['last_name'] = $request->input('last_name');
         $input['email'] = $request->input('email');
+        $input['pekerjaan'] = $request->input('pekerjaan');
+        $input['id_type'] = $request->input('id_type');
+        $input['transport_type'] = $request->input('transport_type');
+        $input['visitor_category'] = $request->input('visitor_category');
+        $input['jumlah_orang'] = $request->input('jumlah_orang');
+        $input['visit_place'] = $request->input('visit_place');
         $input['phone'] = $request->input('phone');
         $input['gender'] = $request->input('gender');
         $input['address'] = $request->input('address');
@@ -124,7 +137,7 @@ class VisitorService
         $input['status'] = Status::ACTIVE;
         $visitor = Visitor::create($input);
 
-        if($visitor){
+        if ($visitor) {
             $visiting['reg_no'] = $reg_no;
             $visiting['purpose'] = $request->input('purpose');
             $visiting['company_name'] = $request->input('company_name');
@@ -139,20 +152,19 @@ class VisitorService
             }
 
             try {
-                $message = "*Notifikasi Visitor Baru*\n\n_Hallo, Visitor dengan informasi sebagai berikut baru saja datang._\n\nNama: ".$visitingDetails->visitor->name."\nEmail: ".$visitingDetails->visitor->email."\nNomor HP: ".$visitingDetails->visitor->phone."\n\nDiharap untuk menemui tamu tersebut di loby.\n\n_terimakasih telah menggunakan aplikasi Visitor Management System._";
-                    sendWhatsappNotification($visitingDetails->employee->phone, $message);
+                $message = "*Notifikasi Visitor Baru*\n\n_Hallo, Visitor dengan informasi sebagai berikut baru saja datang._\n\nNama: " . $visitingDetails->visitor->name . "\nEmail: " . $visitingDetails->visitor->email . "\nNomor HP: " . $visitingDetails->visitor->phone . "\n\nDiharap untuk menemui tamu tersebut di loby.\n\n_terimakasih telah menggunakan aplikasi Visitor Management System._";
+                sendWhatsappNotification($visitingDetails->employee->phone, $message);
 
                 $visitingDetails->employee->user->notify(new SendVisitorToEmployee($visitingDetails));
             } catch (\Exception $e) {
                 // Using a generic exception
 
             }
-        }else{
-            $visitingDetails ='';
+        } else {
+            $visitingDetails = '';
         }
 
         return $visitingDetails;
-
     }
 
     /**
@@ -164,10 +176,17 @@ class VisitorService
     {
         $visitingDetails = VisitingDetails::findOrFail($id);
 
+        $input['id_card'] = $request->input('id_card');
         $input['first_name'] = $request->input('first_name');
         $input['last_name'] = $request->input('last_name');
         $input['email'] = $request->input('email');
         $input['phone'] = $request->input('phone');
+        $input['pekerjaan'] = $request->input('pekerjaan');
+        $input['id_type'] = $request->input('id_type');
+        $input['transport_type'] = $request->input('transport_type');
+        $input['visitor_category'] = $request->input('visitor_category');
+        $input['visit_place'] = $request->input('visit_place');
+        $input['jumlah_orang'] = $request->input('jumlah_orang');
         $input['gender'] = $request->input('gender');
         $input['address'] = $request->input('address');
         $input['national_identification_no'] = $request->input('national_identification_no');
@@ -175,7 +194,7 @@ class VisitorService
         $input['status'] = Status::ACTIVE;
         $visitingDetails->visitor->update($input);
 
-        if($visitingDetails){
+        if ($visitingDetails) {
             $visiting['purpose'] = $request->input('purpose');
             $visiting['company_name'] = $request->input('company_name');
             $visiting['employee_id'] = $request->input('employee_id');
@@ -190,9 +209,9 @@ class VisitorService
             $visitingDetails->addMedia($request->file('image'))->toMediaCollection('visitor');
         }
         try {
-            $message = "*Notifikasi Visitor Baru*\n\n_Hallo, Visitor dengan informasi sebagai berikut baru saja datang._\n\nNama: ".$visitingDetails->visitor->name."\nEmail: ".$visitingDetails->visitor->email."\nNomor HP: ".$visitingDetails->visitor->phone."\n\nDiharap untuk menemui tamu tersebut di loby.\n\n_terimakasih telah menggunakan aplikasi Visitor Management System._";
-                sendWhatsappNotification($visitingDetails->employee->phone, $message);
-            
+            $message = "*Notifikasi Visitor Baru*\n\n_Hallo, Visitor dengan informasi sebagai berikut baru saja datang._\n\nNama: " . $visitingDetails->visitor->name . "\nEmail: " . $visitingDetails->visitor->email . "\nNomor HP: " . $visitingDetails->visitor->phone . "\n\nDiharap untuk menemui tamu tersebut di loby.\n\n_terimakasih telah menggunakan aplikasi Visitor Management System._";
+            sendWhatsappNotification($visitingDetails->employee->phone, $message);
+
             $visitingDetails->employee->user->notify(new SendVisitorToEmployee($visitingDetails));
         } catch (\Exception $e) {
             // Using a generic exception
@@ -214,7 +233,5 @@ class VisitorService
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
     }
-
 }

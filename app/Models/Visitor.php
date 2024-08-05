@@ -50,7 +50,7 @@ class Visitor extends Model implements  HasMedia
     {
         return $this->first_name . ' ' . $this->last_name;
     }
-
+    
     public function getMyStatusAttribute()
     {
         return trans('statuses.' . $this->status);

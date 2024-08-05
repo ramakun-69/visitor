@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 02, 2024 at 09:00 PM
+-- Generation Time: Aug 05, 2024 at 04:58 AM
 -- Server version: 8.0.30
--- PHP Version: 8.2.21
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -479,11 +479,13 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('2856352f-a21a-4866-90f7-bb211a09b2c8', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 9, '[]', NULL, '2024-08-02 20:53:03', '2024-08-02 20:53:03'),
 ('28867df4-f62f-40d7-83b8-6f81f14c8012', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 9, '[]', NULL, '2024-07-26 16:14:55', '2024-07-26 16:14:55'),
 ('4d2fd223-d8c5-4597-a232-2dcd52d55c22', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 3, '[]', NULL, '2021-10-29 06:28:45', '2021-10-29 06:28:45'),
+('50a6db72-9be7-4f3b-bd41-39b54087939e', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 8, '[]', NULL, '2024-08-05 02:50:36', '2024-08-05 02:50:36'),
 ('787fa1e3-ec90-420d-b7d8-c5ca063d3fcd', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 3, '[]', NULL, '2023-11-29 04:27:51', '2023-11-29 04:27:51'),
 ('79cfb923-5cd7-403c-beaa-a6145993539b', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 3, '[]', NULL, '2021-10-29 06:22:39', '2021-10-29 06:22:39'),
 ('7f3644c3-e407-4248-b681-95dfa92a89cf', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 3, '[]', NULL, '2023-11-29 04:40:04', '2023-11-29 04:40:04'),
 ('8c0fda27-e8af-4923-bd7c-c6ded662f74b', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 3, '[]', NULL, '2021-10-29 06:23:00', '2021-10-29 06:23:00'),
 ('a8ecc0ba-9f68-4375-9ab1-bd9feacd14b5', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 8, '[]', NULL, '2024-08-02 07:05:29', '2024-08-02 07:05:29'),
+('b98dc8fa-5bfc-45a4-93a2-4b45081737be', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 9, '[]', NULL, '2024-08-05 01:00:28', '2024-08-05 01:00:28'),
 ('bc0d1152-d5c4-487d-8cf1-1ae09e88ad00', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 9, '[]', NULL, '2024-08-02 19:54:13', '2024-08-02 19:54:13'),
 ('cba02955-dcd3-4233-a6de-47d001b8edd2', 'App\\Notifications\\SendVisitorToEmployee', 'App\\User', 9, '[]', NULL, '2024-08-02 07:31:01', '2024-08-02 07:31:01'),
 ('d19ffce8-114b-4ff9-ac2e-93ebedd3e4bc', 'App\\Notifications\\SendInvitationToVisitors', 'App\\Models\\Visitor', 10, '[]', NULL, '2024-07-26 16:11:10', '2024-07-26 16:11:10'),
@@ -906,10 +908,11 @@ INSERT INTO `visiting_details` (`id`, `reg_no`, `purpose`, `company_name`, `comp
 (7, '2607241', 'berkunjung', 'Angin Ribut', NULL, '2024-07-26 22:30:00', '2024-07-26 22:31:00', 5, 5, 5, 9, 'App\\User', 7, 'App\\User', 7, '2024-07-26 15:30:59', '2024-07-26 15:31:23'),
 (8, '2607242', 'main aja', 'sasa', NULL, '2024-07-26 23:14:00', '2024-07-26 23:29:00', 5, 5, 5, 9, 'App\\User', 1, 'App\\User', 1, '2024-07-26 16:14:54', '2024-07-26 16:29:35'),
 (9, '0208241', 'Magang', 'Erasites', NULL, '2024-08-02 14:05:00', '2024-08-02 14:45:00', 5, 4, 4, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 07:05:27', '2024-08-02 07:45:24'),
-(10, '123457', 'Mlang', 'Erasites', NULL, '2024-08-02 06:31:00', '2024-08-02 17:24:00', 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 07:31:01', '2024-08-02 10:24:49'),
+(10, '123459', 'Mlang', 'Erasites', NULL, '2024-08-02 06:31:00', '2024-08-02 17:24:00', 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 07:31:01', '2024-08-02 10:24:49'),
 (12, '0308241', 'qwerty', 'Erasites', NULL, '2024-08-03 02:53:00', '2024-08-03 02:54:00', 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 19:53:49', '2024-08-02 19:54:57'),
 (13, '0308242', 'qwerty', 'Erasites', NULL, '2024-08-03 02:54:00', '2024-08-03 02:55:00', 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 19:54:13', '2024-08-02 19:55:16'),
-(14, '0308243', 'q', 'Erasites', NULL, '2024-08-03 03:53:00', NULL, 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 20:53:01', '2024-08-02 20:53:01');
+(14, '0308243', 'q', 'Erasites', NULL, '2024-08-03 03:53:00', NULL, 5, 5, 5, 13, 'App\\User', 1, 'App\\User', 1, '2024-08-02 20:53:01', '2024-08-05 01:00:25'),
+(15, '0508241', '<p>Maganag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>', 'Erasites', NULL, '2024-08-05 09:50:00', NULL, 5, 4, 4, 14, 'App\\User', 1, 'App\\User', 1, '2024-08-05 02:50:34', '2024-08-05 02:50:34');
 
 -- --------------------------------------------------------
 
@@ -919,16 +922,18 @@ INSERT INTO `visiting_details` (`id`, `reg_no`, `purpose`, `company_name`, `comp
 
 CREATE TABLE `visitors` (
   `id` bigint UNSIGNED NOT NULL,
-  `id_card` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_card` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `first_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender` tinyint UNSIGNED NOT NULL,
-  `pekerjaan` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_type` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `transport_type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `visit_place` int NOT NULL,
+  `pekerjaan` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transport_type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `visitor_category` enum('tamu','buyer','vendor','suplier') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jumlah_orang` int NOT NULL,
+  `visit_place` int DEFAULT NULL,
   `address` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_identification_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_pre_register` tinyint(1) NOT NULL,
@@ -945,15 +950,16 @@ CREATE TABLE `visitors` (
 -- Dumping data for table `visitors`
 --
 
-INSERT INTO `visitors` (`id`, `id_card`, `first_name`, `last_name`, `email`, `phone`, `gender`, `pekerjaan`, `id_type`, `transport_type`, `visit_place`, `address`, `national_identification_no`, `is_pre_register`, `status`, `creator_type`, `creator_id`, `editor_type`, `editor_id`, `created_at`, `updated_at`) VALUES
-(1, '', 'Heri', 'Santoso', 'heri@gmail.com', '0836722828', 5, '', '', '', 0, 'Cikarang Pusat, Bekasi', '32338884949234', 0, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-23 06:43:23', '2021-10-29 06:22:59'),
-(4, '', 'Vanessa', 'Angel', 'vanessa@kasir.com', '083814305087', 5, '', '', '', 0, 'Telukjambe', '32338884949235', 0, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-23 07:53:30', '2023-11-28 03:47:20'),
-(5, '', 'Hafid', '.', 'hafid@gmail.com', '0215201858', 5, '', '', '', 0, 'Jakarta', NULL, 1, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-26 02:42:47', '2021-07-26 02:42:47'),
-(6, '', 'Bella', 'Tahnia', 'alquraisyi91@gmail.com', '+6283814305092', 5, '', '', '', 0, 'Jakarta', '12345678', 0, 5, 'App\\User', 1, 'App\\User', 1, '2023-11-29 04:27:47', '2023-11-29 04:39:42'),
-(8, '', 'Ayu', 'Apriani', 'ayu@apriani.com', '083899223366', 10, '', '', '', 0, 'Jl. Perjuangan, RT.03/RW.06, Sukadanau, Kec. Cikarang Barat', '1234567890', 0, 5, 'App\\User', 1, 'App\\User', 1, '2024-07-26 08:39:21', '2024-07-26 08:39:21'),
-(9, '', 'zoelham', 'sasa', 'zoelfree@gmail.com', '+628135475552', 5, '', '', '', 0, 'nuri', '120954654115454', 0, 5, 'App\\User', 7, 'App\\User', 7, '2024-07-26 15:30:59', '2024-07-26 16:14:54'),
-(10, '', 'Izun', 'Nuzi', 'fafa@gmail.com', '08546542255555', 5, '', '', '', 0, 'jl. nuri', NULL, 1, 5, 'App\\User', 1, 'App\\User', 1, '2024-07-26 16:11:10', '2024-07-26 16:11:10'),
-(13, '123457', 'Rama', 'Dhana', 'ramakun72@gmail.com', '+6282244812291', 5, 'Developer', 'Lainnya', 'Sedan', 2, 'Malang', '69696969', 0, 5, 'App\\User', 1, 'App\\User', 1, '2024-08-02 07:31:01', '2024-08-02 20:53:01');
+INSERT INTO `visitors` (`id`, `id_card`, `first_name`, `last_name`, `email`, `phone`, `gender`, `pekerjaan`, `id_type`, `transport_type`, `visitor_category`, `jumlah_orang`, `visit_place`, `address`, `national_identification_no`, `is_pre_register`, `status`, `creator_type`, `creator_id`, `editor_type`, `editor_id`, `created_at`, `updated_at`) VALUES
+(1, '', 'Heri', 'Santoso', 'heri@gmail.com', '0836722828', 5, '', '', '', 'tamu', 0, 0, 'Cikarang Pusat, Bekasi', '32338884949234', 0, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-23 06:43:23', '2021-10-29 06:22:59'),
+(4, '', 'Vanessa', 'Angel', 'vanessa@kasir.com', '083814305087', 5, '', '', '', 'tamu', 0, 0, 'Telukjambe', '32338884949235', 0, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-23 07:53:30', '2023-11-28 03:47:20'),
+(5, '', 'Hafid', '.', 'hafid@gmail.com', '0215201858', 5, '', '', '', 'tamu', 0, 0, 'Jakarta', NULL, 1, 5, 'App\\User', 1, 'App\\User', 1, '2021-07-26 02:42:47', '2021-07-26 02:42:47'),
+(6, '', 'Bella', 'Tahnia', 'alquraisyi91@gmail.com', '+6283814305092', 5, '', '', '', 'tamu', 0, 0, 'Jakarta', '12345678', 0, 5, 'App\\User', 1, 'App\\User', 1, '2023-11-29 04:27:47', '2023-11-29 04:39:42'),
+(8, '', 'Ayu', 'Apriani', 'ayu@apriani.com', '083899223366', 10, '', '', '', 'tamu', 0, 0, 'Jl. Perjuangan, RT.03/RW.06, Sukadanau, Kec. Cikarang Barat', '1234567890', 0, 5, 'App\\User', 1, 'App\\User', 1, '2024-07-26 08:39:21', '2024-07-26 08:39:21'),
+(9, '', 'zoelham', 'sasa', 'zoelfree@gmail.com', '+628135475552', 5, '', '', '', 'tamu', 0, 0, 'nuri', '120954654115454', 0, 5, 'App\\User', 7, 'App\\User', 7, '2024-07-26 15:30:59', '2024-07-26 16:14:54'),
+(10, '', 'Izun', 'Nuzi', 'fafa@gmail.com', '08546542255555', 5, '', '', '', 'tamu', 0, 0, 'jl. nuri', NULL, 1, 5, 'App\\User', 1, 'App\\User', 1, '2024-07-26 16:11:10', '2024-07-26 16:11:10'),
+(13, '123457', 'Rama', 'Dhana', 'ramakun72@gmail.com', '+6282244812291', 5, 'Developer', 'Lainnya', 'Sedan', 'suplier', 0, 2, 'Malang', '69696969', 1, 5, 'App\\User', 1, 'App\\User', 1, '2024-08-02 07:31:01', '2024-08-02 20:53:01'),
+(14, '1234578', 'Rama', 'Kun', 'ramakun79@gmail.com', '0822448122911', 5, 'Developer', 'SIM', 'other', 'vendor', 0, 2, '<p>Malang&nbsp;&nbsp;&nbsp;&nbsp;</p>', '69696969000', 1, 5, 'App\\User', 1, 'App\\User', 1, '2024-08-05 02:50:34', '2024-08-05 02:50:34');
 
 -- --------------------------------------------------------
 
@@ -1159,7 +1165,7 @@ ALTER TABLE `attendances`
 -- AUTO_INCREMENT for table `backend_menus`
 --
 ALTER TABLE `backend_menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -1249,13 +1255,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visiting_details`
 --
 ALTER TABLE `visiting_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `visits_places`

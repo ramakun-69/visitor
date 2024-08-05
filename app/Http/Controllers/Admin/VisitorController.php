@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
+use App\VisitsPlace;
 use App\Enums\Status;
+use App\Models\Employee;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\VisitingDetails;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitorRequest;
-use App\Models\Employee;
-use App\Models\VisitingDetails;
-use App\Http\Services\Visitor\VisitorService;
-use Illuminate\Http\Request;
-use DB;
-use Illuminate\Support\Str;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Services\Visitor\VisitorService;
 
 class VisitorController extends Controller
 {
@@ -47,6 +48,7 @@ class VisitorController extends Controller
     {
 
         $this->data['employees'] = Employee::where('status', Status::ACTIVE)->get();
+        $this->data['visitPlaces'] = VisitsPlace::all();
 
         return view('admin.visitor.create', $this->data);
     }
@@ -107,6 +109,7 @@ class VisitorController extends Controller
     {
         $this->data['employees'] = Employee::where('status', Status::ACTIVE)->get();
         $this->data['visitingDetails'] = $this->visitorService->find($id);
+        $this->data['visitPlaces'] = VisitsPlace::all();
         if ($this->data['visitingDetails']) {
             return view('admin.visitor.edit', $this->data);
         } else {
@@ -171,6 +174,9 @@ class VisitorController extends Controller
             })
             ->editColumn('visitor_id', function ($visitingDetail) {
                 return $visitingDetail->reg_no;
+            })
+            ->editColumn('id_card', function ($visitingDetail) {
+                return $visitingDetail->visitor->id_card;
             })
             ->editColumn('email', function ($visitingDetail) {
                 return Str::limit(optional($visitingDetail->visitor)->email, 50);

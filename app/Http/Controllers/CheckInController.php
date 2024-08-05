@@ -42,10 +42,11 @@ class CheckInController extends Controller
     public function createStepOne(Request $request)
     {
         $visitor = $request->session()->get('visitor');
+      
         $employees = Employee::all();
         $visitPlaces = VisitsPlace::all();
 
-        return view('frontend.check-in.step-one', compact('employees', 'visitor','visitPlaces'));
+        return view('frontend.check-in.step-one', compact('employees', 'visitor', 'visitPlaces'));
     }
 
     /**
@@ -67,6 +68,8 @@ class CheckInController extends Controller
                 'transport_type' => 'required',
                 'id_type' => 'required',
                 'visit_place' => 'required',
+                'visitor_category' => 'required',
+                'jumlah_orang' => 'required',
                 'other_trasnport_type' => '',
                 'phone' => 'required|unique:visitors,phone',
                 'purpose' => 'required',
@@ -96,6 +99,8 @@ class CheckInController extends Controller
                 'transport_type' => 'required',
                 'id_type' => 'required',
                 'visit_place' => 'required',
+                'visitor_category' => 'required',
+                'jumlah_orang' => 'required',
                 'other_trasnport_type' => '',
                 'phone' => $phone,
                 'purpose' => 'required',
@@ -108,9 +113,16 @@ class CheckInController extends Controller
                 'address' => '',
             ]);
         }
+        $hasPendingCheckout = VisitingDetails::whereHas('visitor', function ($query) use ($validatedData) {
+            $query->where('id_card',  $validatedData['id_card']);
+        })
+            ->whereNull('checkout_at')
+            ->exists();
 
+        if ($hasPendingCheckout) {
+            return redirect()->back()->with(['warning' => 'Kartu Telah Dipakai Dan Belum Check Out.']);
+        }
         $request->session()->put('visitor', $validatedData);
-
         return redirect()->route('check-in.step-two');
     }
 
@@ -135,7 +147,7 @@ class CheckInController extends Controller
     public function store(Request $request)
     {
         $getVisitor = $request->session()->get('visitor');
-        
+
         if ($getVisitor) {
             $imageName = null;
             if ($request->has('photo')) {
@@ -196,16 +208,18 @@ class CheckInController extends Controller
         if ($request->session()->get('is_returned') == false || empty($request->session()->get('is_returned'))) {
 
 
-            $input['id_card'] =$getVisitor['id_card'];
+            $input['id_card'] = $getVisitor['id_card'];
             $input['first_name'] = $getVisitor['first_name'];
             $input['last_name'] = $getVisitor['last_name'];
             $input['email'] = $getVisitor['email'];
             $input['phone'] = $getVisitor['phone'];
             $input['gender'] = $getVisitor['gender'];
-            $input['pekerjaan'] =$getVisitor['pekerjaan'];
-            $input['id_type'] =$getVisitor['id_type'];
-            $input['visit_place'] =$getVisitor['visit_place'];
-            $input['transport_type'] =$getVisitor['transport_type'];
+            $input['pekerjaan'] = $getVisitor['pekerjaan'];
+            $input['id_type'] = $getVisitor['id_type'];
+            $input['visit_place'] = $getVisitor['visit_place'];
+            $input['visitor_category'] = $getVisitor['visitor_category'];
+            $input['jumlah_orang'] = $getVisitor['jumlah_orang'];
+            $input['transport_type'] = $getVisitor['transport_type'];
             $input['address'] = $getVisitor['address'];
             $input['national_identification_no'] = $getVisitor['national_identification_no'];
             $input['is_pre_register'] = false;
@@ -225,7 +239,9 @@ class CheckInController extends Controller
             $visitor->gender = $getVisitor['gender'];
             $visitor->pekerjaan = $getVisitor['pekerjaan'];
             $visitor->id_type = $getVisitor['id_type'];
-            $visitor->visit_place =$getVisitor['visit_place'];
+            $visitor->visit_place = $getVisitor['visit_place'];
+            $visitor->visitor_category = $getVisitor['visitor_category'];
+            $visitor->jumlah_orang = $getVisitor['jumlah_orang'];
             $visitor->transport_type = $getVisitor['transport_type'];
             $visitor->address = $getVisitor['address'];
             $visitor->national_identification_no = $getVisitor['national_identification_no'];
@@ -234,7 +250,7 @@ class CheckInController extends Controller
         }
 
         if ($visitor) {
-            $visiting['reg_no'] =$reg_no;
+            $visiting['reg_no'] = $reg_no;
             $visiting['purpose'] = $getVisitor['purpose'];
             $visiting['company_name'] = $getVisitor['company_name'];
             $visiting['employee_id'] = $getVisitor['employee_id'];

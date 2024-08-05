@@ -29,6 +29,7 @@
                                     <tr>
                                         <th>{{ __('levels.id') }}</th>
                                         <th>{{ __('Foto') }}</th>
+                                        <th>{{ __('ID Card') }}</th>
                                         <th>{{ __('ID Visitor') }}</th>
                                         <th>{{ __('levels.name') }}</th>
                                         <th>{{ __('levels.email') }}</th>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\Report;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Services\Visitor\VisitorService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Services\Visitor\VisitorService;
 
 class ReportController extends Controller
 {
@@ -30,7 +32,7 @@ class ReportController extends Controller
             'end_date' => 'required|date',
         ]);
         $visitor  = $this->visitorService->report($data['start_date'], $data['end_date']);
-        $pdf = Pdf::loadView('admin.report.print', compact('visitor'));
-        return $pdf->setPaper('a4', 'potrait')->stream();
+        return Excel::download(new Report($visitor), 'Report.xlsx');
+        
     }
 }

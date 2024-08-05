@@ -92,7 +92,16 @@
                 <th>{{ __('ID Card') }}</th>
                 <th>{{ __('levels.name') }}</th>
                 <th>{{ __('levels.email') }}</th>
+                <th>{!! __("Alamat") !!}</th>
+                <th>{{ __("Perusahaan") }}</th>
+                <th>{{ __("Tanda Pengenal/Bukti Diri") }}</th>
+                <th>{{ __("No ID") }}</th>
+                <th>{{ __('Pekerjaan') }}</th>
+                <th>{{ __('Jenis Kendaraan') }}</th>
                 <th>{{ __('Karyawan') }}</th>
+                <th>{{ __("Keperluan") }}</th>
+                <th>{{ __("Kategori Visitor") }}</th>
+                <th>{{ __("Jumlah Orang") }}</th>
                 <th>{{ __('Tempat Yang Dikunjungi') }}</th>
                 <th>{{ __('Masuk') }}</th>
                 <th>{{ __('Keluar') }}</th>
@@ -105,7 +114,16 @@
                     <td>{{ $v->visitor->id_card}}</td>
                     <td>{{ Str::limit(optional($v->visitor)->name, 50)}}</td>
                     <td>{{ $v->visitor->email}}</td>
+                    <td>{{ $v->visitor->address}}</td>
+                    <td>{{ $v->company_name}}</td>
+                    <td>{{ $v->visitor->id_type}}</td>
+                    <td>{{ $v->visitor->national_identification_no}}</td>
+                    <td>{{ $v->visitor->pekerjaan}}</td>
+                    <td>{{ $v->visitor->transport_type}}</td>
                     <td>{{ $v->employee->user->name}}</td>
+                    <td>{!! $v->purpose !!}</td>
+                    <td>{{ Str::ucfirst($v->visitor->visitor_category) }}</td>
+                    <td>{{ $v->visitor->jumlah_orang }} Orang</td>
                     <td>{{ $v->visitor->visitPlace->name}}</td>
                     <td>{{ $v->checkin_at}}</td>
                     <td>{{ $v->checkout_at}}</td>

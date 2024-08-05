@@ -17,6 +17,7 @@ class VisitingDetails extends Model implements  HasMedia
     protected $table = 'visiting_details';
     protected $guarded = ['id'];
     protected $auditColumn = true;
+    protected $with = ['visitor'];
 
     protected $fakeColumns = [];
 

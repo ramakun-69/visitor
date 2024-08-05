@@ -15,8 +15,8 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group {{ $errors->has('visitorID') ? 'has-error' : ''}}">
-                                    {!! Html::decode(Form::label('visitorID', "ID Visitor <span class='text-danger'>*</span>", ['class' => 'control-label'])) !!}
-                                    {!! Form::text('visitorID', old('visitorID'), ('' == 'required') ? ['class' => 'form-control input','id '=>'visitorID','required' => 'required', 'placeholder'=>"Search visitorID.."] : ['class' => 'form-control input','id '=>'visitorID', 'placeholder'=>"Masukkan ID Visitor ..."]) !!}
+                                    {!! Html::decode(Form::label('visitorID', "ID Card <span class='text-danger'>*</span>", ['class' => 'control-label'])) !!}
+                                    {!! Form::text('visitorID', old('visitorID'), ('' == 'required') ? ['class' => 'form-control input','id '=>'visitorID','required' => 'required', 'placeholder'=>"Search visitorID.."] : ['class' => 'form-control input','id '=>'visitorID', 'placeholder'=>"Masukkan ID Card ..."]) !!}
                                     <!-- {!! $errors->first('visitorID', '<p class="text-danger">:message</p>') !!} -->
                                     @if ($errors->any())
                                             @foreach ($errors->all() as $error)

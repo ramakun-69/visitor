@@ -1,6 +1,7 @@
 @extends('frontend.layouts.frontend')
 
 @section('content')
+    <div class="swal" data-swal="{{ session('warning') }}"></div>
     <section id="pm-banner-1" class="custom-css-step">
         <div class="container">
             <div class="card" style="margin-top:40px;">
@@ -13,14 +14,14 @@
                         <div class="save">
                             <div class="visitor" id="visitor">
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-4 col-sm-6">
                                         <div class="form-group {{ $errors->has('id_card') ? 'has-error' : '' }}">
                                             {!! Html::decode(
                                                 Form::label('id_card', 'ID Kartu <span class="text-danger">*</span>', ['class' => 'control-label']),
                                             ) !!}
                                             {!! Form::text(
                                                 'id_card',
-                                                null,
+                                                isset($visitor->id_card) ? $visitor->id_card : null,
                                                 '' == 'required'
                                                     ? ['class' => 'form-control input', 'id ' => 'id_card', 'required' => 'required']
                                                     : ['class' => 'form-control input', 'id ' => 'id_card'],
@@ -28,7 +29,7 @@
                                             {!! $errors->first('first_name', '<p class="text-danger">:message</p>') !!}
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-4 col-sm-12">
                                         <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                                             {!! Html::decode(
                                                 Form::label('first_name', 'Nama Depan <span class="text-danger">*</span>', ['class' => 'control-label']),
@@ -43,7 +44,7 @@
                                             {!! $errors->first('first_name', '<p class="text-danger">:message</p>') !!}
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-4 col-sm-12">
                                         <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                                             {!! Html::decode(
                                                 Form::label('last_name', 'Nama Belakang <span class="text-danger">*</span>', ['class' => 'control-label']),
@@ -80,7 +81,7 @@
                                             ) !!}
                                             {!! Form::text(
                                                 'pekerjaan',
-                                                null,
+                                                isset($visitor->pekerjaan) ? $visitor->pekerjaan : null,
                                                 '' == 'required'
                                                     ? ['class' => 'form-control input', 'id ' => 'pekerjaan', 'required' => 'required']
                                                     : ['class' => 'form-control input', 'id ' => 'pekerjaan'],
@@ -169,16 +170,22 @@
                                         <div class="form-group {{ $errors->has('id_type') ? 'has-error' : '' }}">
                                             {!! Form::label('id_type', 'Pengenal/Bukti Diri', ['class' => 'control-label']) !!}
                                             <div>
-                                                <label class="ml-3 mr-5">{!! Form::radio('id_type', 'KTP', false, ['class' => 'form-check-input']) !!} KTP</label>
+                                                <label class="ml-3 mr-5">{!! Form::radio('id_type', 'KTP', isset($visitor->id_type) && $visitor->id_type == 'KTP', [
+                                                    'class' => 'form-check-input',
+                                                ]) !!} KTP</label>
 
-                                                <label class="mr-5">{!! Form::radio('id_type', 'SIM', false, ['class' => 'form-check-input']) !!} SIM</label>
+                                                <label class="mr-5">{!! Form::radio('id_type', 'SIM', isset($visitor->id_type) && $visitor->id_type == 'SIM', [
+                                                    'class' => 'form-check-input',
+                                                ]) !!} SIM</label>
 
-                                                <label>{!! Form::radio('id_type', 'Lainnya', false, ['class' => 'form-check-input']) !!} Lainnya</label>
+                                                <label>{!! Form::radio('id_type', 'Lainnya', isset($visitor->id_type) && $visitor->id_type == 'Lainnya', [
+                                                    'class' => 'form-check-input',
+                                                ]) !!} Lainnya</label>
                                             </div>
                                             {!! $errors->first('id_type', '<p class="text-danger">:message</p>') !!}
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-sm-12">
+                                    <div class="col-md-4 col-sm-6">
                                         <div
                                             class="form-group {{ $errors->has('national_identification_no') ? 'has-error' : '' }}">
                                             {!! Form::label('national_identification_no', 'No ID', ['class' => 'control-label']) !!}
@@ -199,32 +206,119 @@
                                             {!! Form::label('transport_type', 'Jenis Kendaraan', ['class' => 'control-label']) !!}
                                             <div style="display: flex; align-items: center;">
                                                 <label class="ml-3 mr-5">
-                                                    {!! Form::radio('transport_type', 'Mini Bus', false, ['class' => 'form-check-input', 'id' => 'mini-bus']) !!} Mini Bus
+                                                    {!! Form::radio(
+                                                        'transport_type',
+                                                        'Mini Bus',
+                                                        isset($visitor->transport_type) && $visitor->transport_type == 'Mini Bus',
+                                                        ['class' => 'form-check-input', 'id' => 'mini-bus'],
+                                                    ) !!} Mini Bus
                                                 </label>
 
                                                 <label class="mr-5">
-                                                    {!! Form::radio('transport_type', 'Truck', false, ['class' => 'form-check-input', 'id' => 'truck']) !!} Truck
+                                                    {!! Form::radio(
+                                                        'transport_type',
+                                                        'Truck',
+                                                        isset($visitor->transport_type) && $visitor->transport_type == 'Truck',
+                                                        ['class' => 'form-check-input', 'id' => 'truck'],
+                                                    ) !!} Truck
                                                 </label>
 
                                                 <label class="mr-5">
-                                                    {!! Form::radio('transport_type', 'Sedan', false, ['class' => 'form-check-input', 'id' => 'sedan']) !!} Sedan
+                                                    {!! Form::radio(
+                                                        'transport_type',
+                                                        'Sedan',
+                                                        isset($visitor->transport_type) && $visitor->transport_type == 'Sedan',
+                                                        ['class' => 'form-check-input', 'id' => 'sedan'],
+                                                    ) !!} Sedan
                                                 </label>
 
                                                 <label>
-                                                    {!! Form::radio('transport_type', 'other', false, ['class' => 'form-check-input', 'id' => 'other']) !!} Lainnya
+                                                    {!! Form::radio(
+                                                        'transport_type',
+                                                        'other',
+                                                        isset($visitor->transport_type) && !in_array($visitor->transport_type, ['Mini Bus', 'Truck', 'Sedan']),
+                                                        ['class' => 'form-check-input', 'id' => 'other'],
+                                                    ) !!} Lainnya
 
                                                 </label>
                                                 <label for="">
-                                                    {!! Form::text('transport_type', null, [
-                                                        'class' => 'form-control input',
-                                                        'id' => 'other-transport-type',
-                                                        'placeholder' => 'Nama Kendaraan Lainnya',
-                                                        'disabled' => true,
-                                                        'style' => 'display:inline-block; width:auto; margin-left:10px;',
-                                                    ]) !!}
+                                                    {!! Form::text(
+                                                        'transport_type',
+                                                        isset($visitor->transport_type) && !in_array($visitor->transport_type, ['Mini Bus', 'Truck', 'Sedan'])
+                                                            ? $visitor->transport_type
+                                                            : null,
+                                                        [
+                                                            'class' => 'form-control input',
+                                                            'id' => 'other-transport-type',
+                                                            'placeholder' => 'Nama Kendaraan Lainnya',
+                                                            'disabled' =>
+                                                                isset($visitor->transport_type) && !in_array($visitor->transport_type, ['Mini Bus', 'Truck', 'Sedan'])
+                                                                    ? false
+                                                                    : true,
+                                                            'style' => 'display:inline-block; width:auto; margin-left:10px;',
+                                                        ],
+                                                    ) !!}
                                                 </label>
                                             </div>
                                             {!! $errors->first('transport_type', '<p class="text-danger">:message</p>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group {{ $errors->has('visitor_category') ? 'has-error' : '' }}">
+                                            {!! Form::label('visitor_category', 'Kategori Visitor', ['class' => 'control-label']) !!}
+                                            <div style="display: flex; align-items: center;">
+                                                <label class="ml-3 mr-5">
+                                                    {!! Form::radio(
+                                                        'visitor_category',
+                                                        'tamu',
+                                                        isset($visitor->visitor_category) && $visitor->visitor_category == 'tamu',
+                                                        ['class' => 'form-check-input', 'id' => 'tamu'],
+                                                    ) !!}Tamu
+                                                </label>
+
+                                                <label>
+                                                    {!! Form::radio(
+                                                        'visitor_category',
+                                                        'rekanan',
+                                                        isset($visitor->visitor_category) && $visitor->visitor_category != 'tamu',
+                                                        ['class' => 'form-check-input', 'id' => 'rekanan'],
+                                                    ) !!} Rekanan
+                                                </label>
+                                                <label for="">
+                                                    <select name="visitor_category" id="rekanan_value" class="form-control"
+                                                        style="margin-left:12px;"
+                                                        {{ isset($visitor->visitor_category) && $visitor->visitor_category == 'tamu' ? 'disabled' : '' }}>
+                                                        <option value="" disabled selected>--Silahkan Pilih--</option>
+                                                        <option value="buyer"
+                                                            {{ isset($visitor->visitor_category) && $visitor->visitor_category == 'buyer' ? 'selected' : '' }}>
+                                                            Buyer</option>
+                                                        <option value="vendor"
+                                                            {{ isset($visitor->visitor_category) && $visitor->visitor_category == 'vendor' ? 'selected' : '' }}>
+                                                            Vendor</option>
+                                                        <option value="suplier"
+                                                            {{ isset($visitor->visitor_category) && $visitor->visitor_category == 'suplier' ? 'selected' : '' }}>
+                                                            Suplier</option>
+                                                    </select>
+                                                </label>
+                                                <label for=""></label>
+                                            </div>
+                                            {!! $errors->first('transport_type', '<p class="text-danger">:message</p>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="form-group {{ $errors->has('jumlah_orang') ? 'has-error' : '' }}">
+                                            {!! Form::label('jumlah_orang', 'Jumlah Orang', ['class' => 'control-label']) !!}
+                                            {!! Form::text(
+                                                'jumlah_orang',
+                                                isset($visitor->jumlah_orang) ? $visitor->jumlah_orang : null,
+                                                '' == 'required'
+                                                    ? ['class' => 'form-control input', 'id ' => 'jumlah_orang']
+                                                    : ['class' => 'form-control input', 'id ' => 'jumlah_orang'],
+                                            ) !!}
+                                            {!! $errors->first('jumlah_orang', '<p class="text-danger">:message</p>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -238,7 +332,7 @@
                                                 <option value="">{{ __('Pilih Tempat Yang Dikunjungi') }}</option>
                                                 @foreach ($visitPlaces as $key => $vp)
                                                     <option value="{{ $vp->id }}" value="{{ $vp->id }}"
-                                                        {{ isset($visitor->visitsPlace->vp_id) && $visitor->visitsPlace->vp_id == $vp->id ? 'selected' : '' }}>
+                                                        {{ isset($visitor->visit_place) && $visitor->visit_place == $vp->id ? 'selected' : '' }}>
                                                         {{ $vp->name }}
                                                     </option>
                                                 @endforeach
@@ -246,8 +340,9 @@
                                             {!! $errors->first('visit_place', '<p class="text-danger">:message</p>') !!}
                                         </div>
                                     </div>
+                                   
                                 </div>
-                               
+
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
                                         <div class="form-group {{ $errors->has('company_name') ? 'has-error' : '' }}">
@@ -277,8 +372,8 @@
                                     </div>
 
                                 </div>
-                                
-                              
+
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <a href="{{ route('check-in') }}" class="btn btn-danger float-left text-white">
@@ -301,9 +396,23 @@
     </section>
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2();
+            var swal = $(".swal").data('swal');
+
+            if (swal) {
+                Swal.fire({
+                    title: "Gagal",
+                    text: swal,
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer : 2000,
+                    timerProgressBar: true
+                });
+            }
         })
     </script>
     <script>
@@ -319,6 +428,22 @@
                     } else {
                         otherTextInput.disabled = true;
                         otherTextInput.value = ''; // Clear the input if not 'other'
+                    }
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var rekanan = document.getElementById('rekanan');
+            var rekananSelect = document.getElementById('rekanan_value');
+
+            var categoryVisitor = document.querySelectorAll('input[name="visitor_category"]');
+            categoryVisitor.forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (rekanan.checked) {
+                        rekananSelect.disabled = false;
+                    } else {
+                        rekananSelect.disabled = true;
+                        rekananSelect.value = ''; // Clear the input if not 'other'
                     }
                 });
             });

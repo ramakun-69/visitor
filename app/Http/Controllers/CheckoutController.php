@@ -38,10 +38,14 @@ class CheckoutController extends Controller
         
         $request->validate(
             ['visitorID' => 'required|numeric',],
-            ['visitorID.required' => 'Visitor ID harus diisi', 'visitorID.numeric' => 'ID harus berupa angka']
+            ['visitorID.required' => 'ID Card harus diisi', 'visitorID.numeric' => 'ID harus berupa angka']
         );
 
-        $visitingDetails = VisitingDetails::where('reg_no', $request->visitorID)->first();
+        $id = $request->visitorID;
+
+        $visitingDetails = VisitingDetails::whereHas('visitor', function ($query) use ($id) {
+            $query->where('id_card', $id);
+        })->whereNull('checkout_at')->first();
         $details = false;
 
         return view('frontend.checkout.index', compact('visitingDetails', 'details'));

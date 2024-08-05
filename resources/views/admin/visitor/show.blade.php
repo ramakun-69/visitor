@@ -51,6 +51,13 @@
 			    		<div class="card-body">
 			    			<div class="profile-desc">
 			    				<div class="single-profile">
+			    					<p><b>{{ __('ID Card') }}: </b> {{ $visitingDetails->visitor->id_card}}</p>
+			    				</div>
+			    				<div class="single-profile">
+			    					<p><b>{{ __('Kategori Visitor') }}: </b> {{ Str::ucfirst($visitingDetails->visitor->visitor_category) }}</p>
+			    				</div>
+
+			    				<div class="single-profile">
 			    					<p><b>{{ __('Nama Depan') }}: </b> {{ $visitingDetails->visitor->first_name}}</p>
 			    				</div>
 			    				<div class="single-profile">
@@ -66,13 +73,22 @@
 			    					<p><b>{{ __('Karyawan') }}: </b> {{ $visitingDetails->employee->user->name}}</p>
 			    				</div>
                                 <div class="single-profile">
-                                    <p><b>{{ __('Keperluan') }}: </b> {{ $visitingDetails->purpose}}</p>
+			    					<p><b>{{ __('Jenis Transportasi') }}: </b> {{ $visitingDetails->visitor->transport_type}}</p>
+			    				</div>
+                                <div class="single-profile">
+                                    <p><b>{{ __('Keperluan') }}: </b> {!! $visitingDetails->purpose !!}</p>
+                                </div>
+                                <div class="single-profile">
+                                    <p><b>{{ __('Jumlah Orang') }}: </b> {!! $visitingDetails->visitor->jumlah_orang !!} Orang</p>
                                 </div>
                                 <div class="single-profile">
                                     <p><b>{{ __('Perusahaan') }}: </b> {{ $visitingDetails->company_name}}</p>
                                 </div>
                                 <div class="single-profile">
-                                    <p><b>{{ __('No KTP') }}: </b> {{ $visitingDetails->visitor->national_identification_no}}</p>
+                                    <p><b>{{ __('Tanda Pengenal/Bukti Diri') }}: </b> {{ $visitingDetails->visitor->id_type}}</p>
+                                </div>
+                                <div class="single-profile">
+                                    <p><b>{{ __('No ID') }}: </b> {{ $visitingDetails->visitor->national_identification_no}}</p>
                                 </div>
 			    				<div class="single-profile">
 			    					<p><b>{{ __('Tanggal') }}: </b> {{date('d-m-Y', strtotime($visitingDetails->created_at))}}</p>
@@ -86,7 +102,7 @@
 			    				</div>
                                 @endif
                                 <div class="single-profile">
-                                    <p><b>{{ __('Alamat') }}: </b> {{ $visitingDetails->visitor->address}}</p>
+                                    <p><b>{{ __('Alamat') }}: </b> {!! $visitingDetails->visitor->address!!}</p>
                                 </div>
                                 <div class="single-profile">
                                     <p><b>{{ __('Status') }}: </b> {{ $visitingDetails->my_status}}</p>

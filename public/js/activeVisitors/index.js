@@ -20,6 +20,7 @@ function load_data(status = '',requests='') {
     columns : [
       {data : 'id', name : 'id'},
       {data : 'image', name : 'image'},
+      {data : 'id_card', name : 'id_card'},
       {data : 'visitor_id', name : 'visitor_id'},
       {data : 'name', name : 'name'},
       {data : 'email', name : 'email'},
